@@ -17,12 +17,15 @@ const Dictionary = ({ dictionaryResults }: DictionaryProps) => {
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();
-      animationRefs.current[index].play();
+      animationRefs.current[index]?.play();
       audio.onended = () => {
-        animationRefs.current[index].pause();
+        animationRefs.current[index]?.pause();
       };
     }
   };
+
+  // Cast Player component to avoid TypeScript issues
+  const LottiePlayer = Player as any;
 
   return (
     <>
@@ -38,9 +41,9 @@ const Dictionary = ({ dictionaryResults }: DictionaryProps) => {
                       onClick={() => handlePlaySound(phonetic.audio, index)}
                       className={styles.audioContainer}
                     >
-                      <Player
+                      <LottiePlayer
                         src={AudioLottie}
-                        ref={(el) => (animationRefs.current[index] = el)}
+                        ref={(el: any) => (animationRefs.current[index] = el)}
                         loop={false}
                         autoplay={false}
                         className={styles.audio}

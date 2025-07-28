@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "./Answer.module.css";
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeKatex from "rehype-katex";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Citation } from "@/utils/types";
 
@@ -71,7 +73,7 @@ const Answer = (props: Props) => {
                   <SyntaxHighlighter
                     PreTag="div"
                     language={match[1]}
-                    style={dark}
+                    style={vscDarkPlus}
                     wrapLines={true}
                     wrapLongLines={true}
                     customStyle={{

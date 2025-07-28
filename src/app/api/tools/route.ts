@@ -1,6 +1,11 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Use a dummy key if real one isn't available
+const apiKey = process.env.OPENAI_API_KEY || "sk-dummy-key-for-build";
+
+const openai = new OpenAI({ 
+  apiKey: apiKey
+});
 
 export async function POST(req: Request) {
   if (req.method !== "POST") {
@@ -9,6 +14,16 @@ export async function POST(req: Request) {
         error: "Method not allowed, only POST requests are accepted.",
       }),
       { status: 405 }
+    );
+  }
+
+  // Check if we have a real API key
+  if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.includes("dummy")) {
+    return new Response(
+      JSON.stringify({
+        error: "OpenAI API key is not configured. Please add a valid OPENAI_API_KEY to your environment variables.",
+      }),
+      { status: 500 }
     );
   }
 
